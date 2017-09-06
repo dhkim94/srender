@@ -36,30 +36,15 @@ var config = {
         new ExtractTextPlugin("[name].css")
     ],
     module: {
-        // preLoaders: [
-        //     {
-        //         test: /\.js$/,
-        //         loader: 'eslint-loader',
-        //         exclude: /(node_modules|dist|public)/
-        //     }
-        // ],
         loaders: [
-            {
-                test: /index.html$/,
-                loader: StringReplacePlugin.replace({
-                    replacements: [
-                        {
-                            pattern: /<!-- @secret (\w*?) -->/ig,
-                            replacement: function (match, p1, offset, string) {
-
-                                console.log('----here here');
-
-                                return secrets.web[p1];
-                            }
-                        }
-                    ]
-                })
-            },
+            // preprocess 는 어떻게 넣는지 방법을 모르겠음. 잘 동작 하지 않는다.
+            // Grunt 로 처리 하도록 하자.
+            // {
+            //     test: /\.less$/,
+            //     exclude: /node_modules/,
+            //     enforce: "pre",
+            //     loader: "preprocess-loader?NODE_ENV=abc"
+            // },
             {
                 test: /\.jsx?$/,
                 exclude: /node_modules/,
@@ -78,12 +63,10 @@ var config = {
                 test: /\.less$/,
                 exclude: /node_modules/,
                 use: ExtractTextPlugin.extract({
-                    fallback: 'style-loader',
+                    fallback: "style-loader",
                     use: ["css-loader", "less-loader"]
                 })
             }
-
-            // todo preprocess 넣어 보도록 하자.
         ],
         // noParse: /\.min\.js/,
         // noParse: [ /.*(pixi\.js).*/ ]

@@ -10,7 +10,8 @@ class PLogin2 extends Component {
         console.log('-------PLogin2 render');
 
         return (
-            <div className="login2 transition-item">
+            <div className="page">
+            {/*<div className="login2 transition-item">*/}
                 <div>[Login2 Page]</div>
                 <div>1. Login page 2</div>
                 <div>2. Login page 2</div>
