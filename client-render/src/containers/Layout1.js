@@ -1,35 +1,31 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
 import {Link} from "react-router";
-// import {TransitionGroup, CSSTransition} from "react-transition-group";
-// import CSSTransition from 'react-transition-group/CSSTransition';
-
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import {changeUserId} from "../modules/Commons";
+import store from "../commons/Store";
+
 
 class Layout1 extends Component {
+    handleButton() {
 
-
+        console.log('---here here');
+        store.dispatch(changeUserId({userId: "dhkim"}));
+        // store.dispatch(changeUserId("dhkim"));
+    }
 
     render() {
 
         const duration = 300;
 
-        const defaultStyle = {
-            transition: `opacity ${duration}ms ease-in-out`,
-            opacity: 0,
-        }
 
-        const transitionStyles = {
-            entering: { opacity: 1 },
-            entered:  { opacity: 1 },
-        };
-
-        var path = this.props.location.pathname;
-        var segment = path.split('/')[1] || 'root';
+        const path = this.props.location.pathname;
+        const segment = path.split('/')[1] || 'root';
 
         return (
             <div>
                 <div>Link</div>
+                <div>userId: {this.props.userId}</div>
                 <ul>
                     <li><Link to={"/login"}>login1</Link></li>
                     <li><Link to={"/login/piddd"}>login sub</Link></li>
@@ -37,22 +33,9 @@ class Layout1 extends Component {
                 </ul>
                 layout12<br/>
                 <br/>
+                <button onClick={this.handleButton.bind(this)}>Change userId</button>
+                <br/>
 
-                {/*<TransitionGroup*/}
-                    {/*transitionName="example"*/}
-                    {/*transitionAppear={true}*/}
-                    {/*transitionAppearTimeout={500}*/}
-                    {/*transitionEnter={false}*/}
-                    {/*transitionLeave={false}>*/}
-                    {/*<h1>Fading at Initial Mount</h1>*/}
-                {/*</TransitionGroup>*/}
-
-                {/*<TransitionGroup>*/}
-                    {/*<CSSTransition classNames="example" timeout={{exit:1500, enter:1500}}>*/}
-                        {/*{this.props.children}*/}
-
-                    {/*</CSSTransition>*/}
-                {/*</TransitionGroup>*/}
 
 
                 <ReactCSSTransitionGroup transitionName="pageSlider"
@@ -60,26 +43,10 @@ class Layout1 extends Component {
                     {React.cloneElement(this.props.children, { key: segment })}
                 </ReactCSSTransitionGroup>
 
-                {/*<ReactCSSTransitionGroup transitionName="example" transitionEnterTimeout={700} transitionLeaveTimeout={700}>*/}
-                    {/*{this.props.children}*/}
-                {/*</ReactCSSTransitionGroup>*/}
-
             </div>
         )
     }
 }
-
-// const Layout1 = ({children}) => (
-//     <div>
-//         layout1<br/>
-//         {children}
-//     </div>
-// );
-
-// const mapStateToProps = (state, ownProps) => ({
-//     // prepared: state.common.gigaGenie.init,
-//     // children: ownProps.children
-// });
 
 
 const mapStateToProps = (state, ownProps) => {
@@ -91,12 +58,9 @@ const mapStateToProps = (state, ownProps) => {
 
     return {
         // prepared: state.common.gigaGenie.init,
-        children: ownProps.children
+        children: ownProps.children,
+        userId: state.common.userId
     }
 };
-
-// export default withRouter(connect(mapStateToProps)(Layout1));
-
-// export
 
 export default connect(mapStateToProps)(Layout1);
